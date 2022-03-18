@@ -1,3 +1,7 @@
+using ECommerce.Bussiness.Abstract;
+using ECommerce.Bussiness.Manager;
+using ECommerce.DataAccessLayer.Abstract;
+using ECommerce.DataAccessLayer.Concrete;
 using ECommerce.Web.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +28,12 @@ namespace ECommerce.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICategoryDal,EfCoreCategoryDal>();
+            services.AddScoped<IProductDal,EfCoreProductDal>();
+            services.AddScoped<ICategoryService,CategoryManager>();
+            services.AddScoped<IProductService, ProductManager>();
+
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 

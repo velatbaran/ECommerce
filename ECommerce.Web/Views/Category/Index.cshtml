@@ -1,0 +1,47 @@
+﻿@model ListCategoryModel
+@{
+    ViewData["Title"] = "Kategori Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+</div>
+<hr />
+@if (@Model.Categories.Count == 0)
+{
+    <div class="alert alert-warning">
+        Kategori kaydı bulunmamaktadır.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover text-center">
+        <thead>
+            <tr style="background:grey" class="text-white">
+                <th style="width:50px">Id</th>
+                <th>Name</th>
+                <th style="width:200px">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a href="/Category/EditCategory/@item.Id" class="btn btn-warning btn-sm mr-2" title="Edit"><i class="fa fa-edit mr-2">&nbsp;</i>Edit</a>
+                        <form action="/Category/DeleteCategory" method="post" style="display:inline">
+                            <input type="text" name="Id" value="@item.Id" hidden />
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm('Kategori kaydını silmek istediğinize emin misiniz?')"><i class="fa fa-trash mr-2">&nbsp;</i>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
