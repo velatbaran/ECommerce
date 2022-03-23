@@ -1,0 +1,98 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "Ürün Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+        <hr />
+    </div>
+</div>
+
+<form asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-8">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input asp-for="Id" name="Id" value="@Model.Id" hidden/>
+            <div class="form-group row mb-1">
+                <label asp-for="Name" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" value="@Model.Name" />
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label asp-for="Image" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input type="hidden" name="Image" value="@Model.Image" /> <!--Bir hata olduğunda sayfa yeniden yüklendiğinde varolan image tekrar gizlenerek yüklenecek.-->
+                    <img src="~/images/product/@Model.Image" width="80" alt="" />
+                    <input type="file" asp-for="Image" />
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label asp-for="Description" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <textarea asp-for="Description" id="editor" class="form-control" cols="3" rows="5"> @Model.Description</textarea>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label asp-for="Price" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Price" class="form-control" value="@Model.Price" />
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label asp-for="Amount" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Amount" class="form-control" value="@Model.Amount" />
+                </div>
+            </div>
+            <div class="form-group form-check row mb-1" style="margin-left:130px">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsStock" /> Stokta Var Mı?
+                </label>
+            </div>
+            <div class="form-group row mb-1 pull-right">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary mr-2" title="Kaydet"><i class="fa fa-save mr-2">&nbsp;</i>Kaydet</button>
+                    <a href="/Product/Index" class="btn btn-dark" title="Kayıt Listesine Dön"><i class="fa fa-arrow-left mr-2">&nbsp;</i>Kayıt Listesine Dön</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            @foreach (var item in (List<Category>)ViewBag.Categories)
+            {
+                var isChecked = "";
+                if (Model.SelectedCategories.Any(c => c.Id == item.Id))
+                {
+                    isChecked = "checked";
+                    <input type="hidden" name="SelectedCategories[@counter].Id" value="@item.Id" />
+                    <input type="hidden" name="SelectedCategories[@counter].Name" value="@item.Name" />
+                    counter++;
+                }
+                else
+                {
+                    isChecked = "";
+                }
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                       name="categoryIds"
+                       value="@item.Id"
+                       class="custom-control-input"
+                       id="category@(item.Id)"
+                       @isChecked>
+                    <label class="custom-control-label" for="category@(item.Id)">@item.Name</label>
+                </div>
+            }
+        </div>
+    </div>
+</form>
+<script src="~/modules/ckeditor/ckeditor.js" type="text/javascript"></script>
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+<script>
+    CKEDITOR.replace("editor");
+</script>
+}

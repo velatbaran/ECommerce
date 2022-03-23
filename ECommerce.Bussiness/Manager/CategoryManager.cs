@@ -42,6 +42,11 @@ namespace ECommerce.Bussiness.Manager
             return _categoryDal.GetOne(filter);
         }
 
+        public Category GetCategoryWithProducts(int id)
+        {
+            return _categoryDal.GetCategoryWithProducts(id);
+        }
+
         public IQueryable<Category> ListQuryable(Expression<Func<Category, bool>> filter = null)
         {
             return _categoryDal.ListQuryable(filter);
@@ -50,6 +55,11 @@ namespace ECommerce.Bussiness.Manager
         public int Update(Category entity)
         {
             return _categoryDal.Update(entity);
+        }
+
+        public void DeleteProductFromCategory(int categoryId, int productId)
+        {
+            _categoryDal.DeleteProductFromCategory(categoryId, productId);
         }
     }
 }

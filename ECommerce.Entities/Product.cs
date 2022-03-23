@@ -19,7 +19,6 @@ namespace ECommerce.Entities
         public string Description { get; set; }
 
         [DisplayName("Resim")]
-        [Required(ErrorMessage = "{0} alanı boş geçilemez.")]
         public string Image { get; set; }
 
         [DisplayName("Fiyat")]

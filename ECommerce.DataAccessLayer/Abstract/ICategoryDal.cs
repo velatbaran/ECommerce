@@ -9,6 +9,7 @@ namespace ECommerce.DataAccessLayer.Abstract
 {
     public interface ICategoryDal : IRepository<Category>
     {
-
+        Category GetCategoryWithProducts(int id);
+        void DeleteProductFromCategory(int categoryId, int productId);
     }
 }

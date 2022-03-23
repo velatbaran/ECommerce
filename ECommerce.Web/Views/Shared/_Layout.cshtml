@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - ECommerce</title>
     <link rel="stylesheet" href="~/modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/modules/font-awesome/css/font-awesome.min.css" />
+    <link href="~/css/validation-summary.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -39,6 +41,23 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Ürünler
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" title="Ürün Listesi">
+                                        <i class="fa fa-th-list"></i> Ürün Listesi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Product" asp-action="Create" title="Ürün Ekle">
+                                        <i class="fa fa-plus"></i> Ürün Ekle
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -62,6 +81,7 @@
     <script src="~/lib/bootstrap/dist/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

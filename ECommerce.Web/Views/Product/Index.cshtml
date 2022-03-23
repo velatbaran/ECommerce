@@ -1,0 +1,118 @@
+﻿@model ListProductModel
+@{
+    ViewData["Title"] = "Ürün Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+</div>
+<hr />
+<div class="row mb-1 pull-right">
+    <div class="col-md-12">
+        <a href="/Product/Create" class="btn btn-primary btn-sm mr-2 float-right" title="Ürün Ekle"><i class="fa fa-plus mr-2">&nbsp;</i>Ürün Ekle</a>
+    </div>
+</div>
+@if (@Model.Products.Count == 0)
+{
+    <div class="alert alert-warning">
+        Ürün kaydı bulunmamaktadır.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-striped text-center" id="tableProducts">
+        <thead>
+            <tr style="background:grey" class="text-white">
+                <th style="width:50px">Id</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Kalan Adet</th>
+                <th>Stok Durumu</th>
+                <th>Kayıt Tarihi</th>
+                <th>Kaydeden</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td><strong>@item.Id</strong></td>
+                    <td><img src="/images/product/@item.Image" width="100" /></td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Amount</td>
+                    <td>
+                        @if (item.IsStock)
+                        {
+                            <span class="text-success">Stokta Mevcuttur</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Stokta Tükendi</span>
+                        }
+                    </td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.CreatedUsername</td>
+                    <td>
+                        <a href="/Product/Edit/@item.Id" class="btn btn-warning btn-sm mr-2" title="Güncelle"><i class="fa fa-edit mr-2">&nbsp;</i></a>
+                        <a href="#" class="btn btn-dark btn-sm mr-2" title="Detay" data-product-id="@item.Id" data-bs-toggle="modal" data-bs-target="#productDetailModal"><i class="fa fa-search mr-2">&nbsp;</i></a>
+                        <form action="/Product/Delete" method="post" style="display:inline">
+                            <input type="text" name="Id" value="@item.Id" hidden />
+                            <button type="submit" class="btn btn-danger btn-sm" title="Sil" onclick="return confirm('Ürün kaydını silmek istediğinize emin misiniz?')"><i class="fa fa-trash mr-2">&nbsp;</i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productDetailModalLabel">Ürün Detay</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Kapat"></button>
+      </div>
+      <div class="modal-body" id="product_body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" title="Kapat">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+        $(document).ready( function () {
+        $('#tableProducts').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            }
+        });
+    } );
+</script>
+
+<script>
+    $(function(){
+
+        $('#productDetailModal').on('show.bs.modal', function (e) {  
+            var _productId = $(e.relatedTarget); 
+            var productId = _productId.data("product-id"); 
+            $("#product_body").load("/Product/Detail/" + productId);
+        });
+
+    });
+</script>
+
+

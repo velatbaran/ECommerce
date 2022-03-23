@@ -1,0 +1,109 @@
+﻿@model CategoryModel
+@{
+    ViewData["Title"] = "Kategori Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@ViewData["Title"]</h2>
+        <hr />
+        <form asp-controller="Category" asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="@Model.Id" value="@Model.Id" />
+            <div class="form-group row mb-1">
+                <label asp-for="Name" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" value="@Model.Name" />
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <div class="col-md-10 offset-md-2">
+                    <button type="submit" class="btn btn-warning mr-2" title="Güncelle"><i class="fa fa-edit mr-2">&nbsp;</i>Güncelle</button>
+                    <a href="/Category/Index" class="btn btn-dark" title="Kayıt Listesine Dön"><i class="fa fa-arrow-left mr-2">&nbsp;</i>Kayıt Listesine Dön</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <h2>Kategoriye Ait Ürünler</h2>
+        <hr />
+        @if (@Model.Products.Count == 0)
+        {
+            <div class="alert alert-warning">
+                Bu kategoriye ait ürün kaydı bulunmamaktadır.
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover table-striped text-center" id="tableProductsByCategory">
+                <thead>
+                    <tr style="background:grey" class="text-white">
+                        <th style="width:50px">Id</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Kalan Adet</th>
+                        <th>Stok Durumu</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        @if (item.IsDeleted == false)
+                        {
+                            <tr>
+                                <td><strong>@item.Id</strong></td>
+                                <td><img src="/images/product/@item.Image" width="100" /></td>
+                                <td>@item.Name</td>
+                                <td>@item.Price</td>
+                                <td>@item.Amount</td>
+                                <td>
+                                    @if (item.IsStock)
+                                    {
+                                        <span class="text-success">Stokta Mevcuttur</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger">Stokta Tükendi.</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/Product/Edit/@item.Id" class="btn btn-warning btn-sm mr-2" title="Güncelle"><i class="fa fa-edit mr-2">&nbsp;</i></a>
+                                    <a href="/Product/Detail/@item.Id" class="btn btn-dark btn-sm mr-2" title="Detay"><i class="fa fa-search mr-2">&nbsp;</i></a>
+                                    <form action="/Category/DeleteProductFromCategory" method="post" style="display:inline">
+                                        <input type="text" name="categoryId" value="@Model.Id" hidden />
+                                        <input type="text" name="productId" value="@item.Id" hidden />
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Sil" onclick="return confirm('Ürün kaydını silmek istediğinize emin misiniz?')"><i class="fa fa-trash mr-2">&nbsp;</i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+        $(document).ready( function () {
+        $('#tableProductsByCategory').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            }
+        });
+    } );
+</script>
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}
+

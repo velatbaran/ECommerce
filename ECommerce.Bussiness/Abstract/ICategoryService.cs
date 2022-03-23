@@ -17,5 +17,7 @@ namespace ECommerce.Bussiness.Abstract
         int Create(Category entity);
         int Update(Category entity);
         int Delete(Category entity);
+        Category GetCategoryWithProducts(int id);
+        void DeleteProductFromCategory(int categoryId, int productId);
     }
 }

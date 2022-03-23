@@ -1,0 +1,102 @@
+﻿@model ProductDetailsModel
+
+<div class="row">
+    <div class="col-md-12">
+        <dl class="row">
+            <dd class="col-md-12 text-center">
+                <img src="~/images/product/@Model.Product.Image" alt="" width="200" height="200" class="img-fluid" /> <br />
+            </dd>
+        </dl>
+        <hr />
+        <dl class="row">
+            <dt class="col-md-5">
+                Kategoriler :
+            </dt>
+            <dd class="col-md-7">
+                @foreach (var category in Model.Categories)
+                {
+                    <a class="btn btn-outline-primary" style="display:inline">@category.Name</a>
+                }
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Ürün Adı :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.Name
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Fiyat :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.Price
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Miktarı :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.Amount
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Açıklama :
+            </dt>
+            <dd class="col-md-7">
+                @Html.Raw(Model.Product.Description)
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Stok Durumu :
+            </dt>
+            <dd class="col-md-7">
+                @if (Model.Product.IsStock)
+                {
+                    <span class="text-success">Stokta Mevcuttur</span>
+                }
+                else
+                {
+                    <span class="text-danger">Stokta Tükendi</span>
+                }
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Kayıt Tarihi :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.CreatedDate
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Kaydeden :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.CreatedUsername
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Güncelleme Tarihi :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.ModifiedDate
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-md-5">
+                Güncelleyen :
+            </dt>
+            <dd class="col-md-7">
+                @Model.Product.ModifiedUsername
+            </dd>
+        </dl>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿@model CategoryModel
+<div class="row">
+    <div class="col-md-12">
+        <h2>Kategori Detay</h2>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <dl class="row">
+            <dt class="col-sm-3">
+                Kategori Adı :
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Name
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-3">
+                Kayıt Tarihi :
+            </dt>
+            <dd class="col-sm-9">
+                @Model.CreatedDate
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-3">
+                Kaydeden :
+            </dt>
+            <dd class="col-sm-9">
+                @Model.CreatedUsername
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-3">
+                Güncelleme Tarihi :
+            </dt>
+            <dd class="col-sm-9">
+                @Model.ModifiedDate
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-3">
+                Güncelleyen :
+            </dt>
+            <dd class="col-sm-9">
+                @Model.ModifiedUsername
+            </dd>
+        </dl>
+    </div>
+</div>
+<hr />
